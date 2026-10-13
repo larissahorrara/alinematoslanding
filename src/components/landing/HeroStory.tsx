@@ -26,11 +26,42 @@ export const FINAL_LINE_2 = 'Contrate hoje e durma tranquilo amanhã.';
 
 const NARRATIVE = [
   { start: 2, text: 'Você prepara tudo. O quarto, a mamadeira, o primeiro passinho...' },
-  { start: 7, text: 'Mas tem coisas que não dá pra prever.' },
-  { start: 11, text: 'Uma febre alta de madrugada.' },
-  { start: 13.5, text: 'Uma alergia inesperada.' },
-  { start: 16, text: 'Um susto que não espera a hora.' },
-];
+  { start: 7, text: 'Mas tem coisas que não dá pra prever.', highlight: 'não dá' },
+  { start: 11, text: 'Uma febre alta de madrugada.', highlight: 'febre alta' },
+  { start: 13.5, text: 'Uma alergia inesperada.', highlight: 'inesperada' },
+  { start: 16, text: 'Um susto que não espera a hora.', highlight: 'não espera' },
+] as { start: number; text: string; highlight?: string }[];
+
+/** Frase com uma expressão em destaque (a pontuação colada não quebra de linha separada da palavra) */
+const HighlightedLine: React.FC<{ text: string; highlight?: string }> = ({ text, highlight }) => {
+  const i = highlight ? text.indexOf(highlight) : -1;
+  if (!highlight || i < 0) return <Words text={text} />;
+  const before = text.slice(0, i).trimEnd();
+  let after = text.slice(i + highlight.length);
+  const glued = after.match(/^[^\s]*/)?.[0] ?? '';
+  after = after.slice(glued.length).trim();
+  return (
+    <>
+      {before && (
+        <>
+          <Words text={before} />{' '}
+        </>
+      )}
+      <span className="whitespace-nowrap">
+        <span className="hl">
+          <Words text={highlight} />
+        </span>
+        {glued && <span className="word">{glued}</span>}
+      </span>
+      {after && (
+        <>
+          {' '}
+          <Words text={after} />
+        </>
+      )}
+    </>
+  );
+};
 
 const ICONS = [
   {
@@ -248,6 +279,11 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
               line.querySelectorAll('.word'),
               { opacity: 0, y: 22, scale: 0.94 },
               { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.7)', stagger: 0.07 },
+            );
+            gsap.fromTo(
+              line.querySelectorAll('.hl'),
+              { backgroundSize: '0% 100%' },
+              { backgroundSize: '100% 100%', duration: 0.7, ease: 'power2.out', delay: 0.45 },
             );
             gsap.fromTo(
               line.querySelector('.accent'),
@@ -472,14 +508,35 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
 
   const hasVideo = !!media && media.sources.length > 0;
 
-  // Vídeo terminou: congela no último quadro do sorriso
+  // Vídeo terminou: a chamada final fica fixa na tela e o vídeo volta a rodar em looping
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const onVideoEnded = () => finishRef.current();
+    const onVideoEnded = () => {
+      finishRef.current();
+      v.currentTime = 0;
+      v.play().catch(() => undefined);
+    };
     v.addEventListener('ended', onVideoEnded);
     return () => v.removeEventListener('ended', onVideoEnded);
   }, [hasVideo]);
+
+  // Economia de bateria: pausa o vídeo quando o banner sai da tela e retoma quando volta
+  useEffect(() => {
+    const hero = heroRef.current;
+    const v = videoRef.current;
+    if (!hero || !v || reduced) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (modeRef.current !== 'video') return;
+        if (entry.isIntersecting) v.play().catch(() => undefined);
+        else v.pause();
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(hero);
+    return () => io.disconnect();
+  }, [hasVideo, reduced]);
 
   useEffect(() => {
     if (!reduced) requestRefresh();
@@ -711,7 +768,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
             }}
             className="narrative-line"
           >
-            <Words text={n.text} />
+            <HighlightedLine text={n.text} highlight={n.highlight} />
             <span className="accent" />
           </p>
         ))}
