@@ -123,7 +123,7 @@ export const NewsSection: React.FC = () => {
           <div className="pt-2">
             <button
               onClick={() => openWhatsApp('Olá, Aline! Vi o levantamento de notícias do seu site sobre planos de saúde e gostaria de tirar dúvidas sobre o meu contrato atual.')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-brand hover:bg-brand-hover text-white font-semibold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-cta hover:bg-cta-hover text-cta-ink font-bold font-semibold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
               <span>Tirar Dúvidas sobre seu Contrato no WhatsApp</span>

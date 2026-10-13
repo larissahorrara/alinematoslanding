@@ -43,14 +43,14 @@ export const WhatsAppFab: React.FC<WhatsAppFabProps> = ({ ready }) => {
       aria-label="Falar com a Aline no WhatsApp"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`group fixed bottom-5 right-5 z-50 inline-flex h-16 items-center gap-3 rounded-full bg-brand pl-4 pr-4 text-white shadow-[0_14px_34px_-12px_rgb(4_120_87/0.7)] transition-all duration-500 hover:bg-brand-hover sm:bottom-7 sm:right-7 sm:pr-6 ${
+      className={`group fixed bottom-5 right-5 z-50 inline-flex h-16 items-center gap-3 rounded-full bg-cta pl-4 pr-4 text-cta-ink shadow-[0_14px_34px_-12px_rgb(245_124_0/0.75)] transition-all duration-500 hover:bg-cta-hover sm:bottom-7 sm:right-7 sm:pr-6 ${
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
       }`}
     >
       <span className="relative inline-flex h-8 w-8 items-center justify-center">
         <MessageCircle className="h-7 w-7" aria-hidden="true" />
       </span>
-      <span className="hidden text-[0.95rem] font-semibold sm:inline">Fale com a Aline</span>
+      <span className="hidden text-[0.95rem] font-bold sm:inline">Fale com a Aline</span>
     </a>
   );
 };

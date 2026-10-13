@@ -5,7 +5,6 @@
  */
 
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
 import { ScrollTrigger, startSmoothScroll } from './lib/motion';
 import { HeroStory } from './components/landing/HeroStory';
 import { Unpredictable } from './components/landing/Unpredictable';
@@ -14,6 +13,7 @@ import { AboutAline } from './components/landing/AboutAline';
 import { FinalCTA } from './components/landing/FinalCTA';
 import { SiteFooter } from './components/landing/SiteFooter';
 import { WhatsAppFab } from './components/landing/WhatsAppFab';
+import { SiteHeader } from './components/landing/SiteHeader';
 import { PrivacyDialog } from './components/landing/PrivacyDialog';
 
 // Páginas de guia carregadas sob demanda (deixam a página inicial mais leve)
@@ -69,45 +69,27 @@ export default function App() {
     };
   }, [page]);
 
-  if (page !== 'home') {
-    return (
-      <>
-        <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream/90 backdrop-blur-md">
-          <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-3">
-            <a href="#inicio" className="font-display text-xl text-ink">
-              Aline Matos
-            </a>
-            <a href="#inicio" className="btn-ghost">
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Voltar ao início
-            </a>
-          </div>
-        </header>
-        <main>
+  return (
+    <div className="has-header">
+      <SiteHeader onHome={page === 'home'} />
+      <main>
+        {page === 'home' ? (
+          <>
+            <HeroStory onEnded={() => setHeroEnded(true)} />
+            <Unpredictable />
+            <NotAlone />
+            <AboutAline />
+          </>
+        ) : (
           <Suspense fallback={<div className="min-h-[60svh]" />}>
             {page === 'tea' ? <AutismHealthPlan /> : <NewsSection />}
           </Suspense>
-          <FinalCTA />
-        </main>
-        <SiteFooter />
-        <WhatsAppFab ready />
-        <PrivacyDialog />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <main>
-        <HeroStory onEnded={() => setHeroEnded(true)} />
-        <Unpredictable />
-        <NotAlone />
-        <AboutAline />
+        )}
         <FinalCTA />
       </main>
       <SiteFooter />
-      <WhatsAppFab ready={heroEnded} />
+      <WhatsAppFab ready={page !== 'home' || heroEnded} />
       <PrivacyDialog />
-    </>
+    </div>
   );
 }

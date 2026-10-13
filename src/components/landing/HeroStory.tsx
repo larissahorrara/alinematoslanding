@@ -1,15 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  ChevronDown,
-  Droplet,
-  Hospital,
-  MessageCircle,
-  RotateCcw,
-  Syringe,
-  Thermometer,
-  Volume2,
-  VolumeX,
-} from 'lucide-react';
+import { ChevronDown, Droplet, Hospital, MessageCircle, RotateCcw, Syringe, Thermometer, Volume2, VolumeX } from 'lucide-react';
 import { gsap, ScrollTrigger, prefersReducedMotion, scrollToTarget } from '../../lib/motion';
 import { loadHeroMedia, type HeroMedia } from '../../lib/media';
 import { KIDS_PLAN_URL } from '../../utils/whatsapp';
@@ -499,39 +489,35 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
     return (
       <section
         ref={heroRef}
+        id="inicio"
         className="hero"
         data-phase="static"
         data-stage="ended"
         data-mode="fallback"
-        style={{ height: 'auto', minHeight: '100svh' }}
+        style={{ height: 'auto', minHeight: 'calc(100svh - 64px)' }}
         aria-labelledby="titulo-principal"
       >
         {media?.poster ? (
-          <img
-            src={media.poster}
-            alt="Bebê sentado no chão da sala olhando para os pais com um sorriso"
-            className="hero-media"
-          />
+          <img src={media.poster} alt="Bebê sentado no chão da sala olhando para os pais com um sorriso" className="hero-media" />
         ) : (
           <div className="hero-fallback" aria-hidden="true">
             <div className="sun" />
           </div>
         )}
         <div className="hero-veil" style={{ opacity: 1 }} aria-hidden="true" />
-        <BrandMark />
-        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-center gap-8 px-5 py-28 text-center">
-          <h1 id="titulo-principal" className="font-display text-[clamp(2rem,5.4vw,3.6rem)] leading-[1.08] text-ink">
+        <div className="relative z-10 mx-auto flex min-h-[calc(100svh-64px)] max-w-3xl flex-col items-center justify-center gap-8 px-5 py-20 text-center">
+          <h1 id="titulo-principal" className="font-display text-[clamp(2rem,5.4vw,3.6rem)] leading-[1.08] text-white">
             <span className="block">{TITLE_LINE_1}</span>
-            <span className="mt-2 block text-peach-deep glow-text">{TITLE_LINE_2}</span>
+            <span className="mt-2 block text-[#FFCC80] glow-text">{TITLE_LINE_2}</span>
           </h1>
           <div className="space-y-3">
-            <p className="font-display text-[clamp(1.5rem,3.6vw,2.4rem)] leading-tight text-ink">{MAIN_MESSAGE}</p>
-            <p className="text-lg text-ink-soft">{MAIN_SUB}</p>
+            <p className="font-display text-[clamp(1.5rem,3.6vw,2.4rem)] leading-tight text-white">{MAIN_MESSAGE}</p>
+            <p className="text-lg text-white/90">{MAIN_SUB}</p>
           </div>
-          <div className="space-y-5 rounded-[2rem] bg-cream/85 px-6 py-6 shadow-[var(--shadow-soft)]">
-            <p className="font-display text-[clamp(1.35rem,3vw,2rem)] leading-tight text-ink">
+          <div className="space-y-5 rounded-[2rem] bg-white/10 px-6 py-6 ring-1 ring-white/25">
+            <p className="font-display text-[clamp(1.35rem,3vw,2rem)] leading-tight text-white">
               {FINAL_LINE_1}
-              <span className="block text-ink-soft">{FINAL_LINE_2}</span>
+              <span className="block text-[#FFCC80]">{FINAL_LINE_2}</span>
             </p>
             <a href={KIDS_PLAN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
@@ -547,6 +533,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
   return (
     <section
       ref={heroRef}
+      id="inicio"
       className="hero"
       data-phase="intro"
       data-stage="intro"
@@ -554,9 +541,9 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
       aria-labelledby="titulo-principal"
       style={
         {
-          '--icon-a': mode === 'video' ? '#F6D5C3' : '#b85f36',
-          '--icon-b': mode === 'video' ? '#CFE3F0' : '#3f6f91',
-          '--icon-c': mode === 'video' ? '#B8CBB8' : '#4f6b4f',
+          '--icon-a': mode === 'video' ? '#BBDEFB' : '#FFFFFF',
+          '--icon-b': mode === 'video' ? '#C8E6C9' : '#BBDEFB',
+          '--icon-c': mode === 'video' ? '#FFE0B2' : '#FFCC80',
         } as React.CSSProperties
       }
     >
@@ -582,14 +569,35 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
 
       {(!hasVideo || mode === 'fallback') && (
         <div className="hero-fallback" aria-hidden="true">
-          <div className="blob" style={{ width: '42vw', height: '42vw', left: '-8vw', top: '-6vw', '--blob': '#F6D5C3' } as React.CSSProperties} />
           <div
             className="blob"
-            style={{ width: '38vw', height: '38vw', right: '-6vw', top: '8vh', '--blob': '#CFE3F0', animationDelay: '-6s' } as React.CSSProperties}
+            style={{ width: '42vw', height: '42vw', left: '-8vw', top: '-6vw', '--blob': '#64B5F6' } as React.CSSProperties}
           />
           <div
             className="blob"
-            style={{ width: '46vw', height: '30vw', left: '28vw', bottom: '-10vw', '--blob': '#B8CBB8', animationDelay: '-11s' } as React.CSSProperties}
+            style={
+              {
+                width: '38vw',
+                height: '38vw',
+                right: '-6vw',
+                top: '8vh',
+                '--blob': '#0D47A1',
+                animationDelay: '-6s',
+              } as React.CSSProperties
+            }
+          />
+          <div
+            className="blob"
+            style={
+              {
+                width: '46vw',
+                height: '30vw',
+                left: '28vw',
+                bottom: '-10vw',
+                '--blob': '#81C784',
+                animationDelay: '-11s',
+              } as React.CSSProperties
+            }
           />
           <div className="sun" />
           {/* Caminho do bebê, desenhado ao longo da narrativa */}
@@ -615,8 +623,8 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
             <path
               d="M-20 150 C 120 70, 240 190, 400 120 S 660 40, 820 110 S 980 170, 1030 90"
               fill="none"
-              stroke="#4f6b4f"
-              strokeOpacity="0.4"
+              stroke="#FFFFFF"
+              strokeOpacity="0.5"
               strokeWidth="3"
               strokeLinecap="round"
               strokeDasharray="2 14"
@@ -627,8 +635,8 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
         </div>
       )}
 
-      {/* Véu off-white da abertura */}
-      <div ref={washRef} className="absolute inset-0 z-[2] bg-cream/55" aria-hidden="true" />
+      {/* Véu azul da abertura */}
+      <div ref={washRef} className="absolute inset-0 z-[2] bg-[#1565c0]/60" aria-hidden="true" />
 
       <div className="hero-scrim" aria-hidden="true" />
       <div className="hero-veil" aria-hidden="true" />
@@ -651,8 +659,6 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
         ))}
       </div>
 
-      <BrandMark />
-
       {/* Botão de som (navegadores bloqueiam áudio automático) */}
       {hasVideo && mode === 'video' && (
         <button
@@ -671,12 +677,12 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
         <h1
           ref={titleRef}
           id="titulo-principal"
-          className="font-display mx-auto w-full max-w-[80vw] text-center text-[clamp(2rem,6vw,4.6rem)] font-medium leading-[1.06] text-ink sm:max-w-4xl"
+          className="font-display mx-auto w-full max-w-[80vw] text-center text-[clamp(2rem,6vw,4.6rem)] font-medium leading-[1.06] text-white sm:max-w-4xl"
         >
           <span ref={titleLine1Ref} className="block">
             <Words text={TITLE_LINE_1} />
           </span>
-          <span ref={titleLine2Ref} className="mt-3 block text-peach-deep glow-text">
+          <span ref={titleLine2Ref} className="mt-3 block text-[#FFCC80] glow-text">
             <Words text={TITLE_LINE_2} />
           </span>
         </h1>
@@ -705,19 +711,23 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
       {/* Momento do sorriso e chamada final (terço superior) */}
       <div className="top-message">
         <div ref={mainRef} className="max-w-3xl" style={HIDDEN_TEXT}>
-          <p className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] font-medium leading-[1.1] text-ink glow-text">
+          <p className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] font-medium leading-[1.1] text-white glow-text">
             <Words text={MAIN_MESSAGE} />
           </p>
-          <p ref={mainSubRef} style={HIDDEN_TEXT} className="mx-auto mt-3 max-w-xl text-[clamp(1rem,1.6vw,1.25rem)] font-medium text-ink-soft">
+          <p
+            ref={mainSubRef}
+            style={HIDDEN_TEXT}
+            className="mx-auto mt-3 max-w-xl text-[clamp(1rem,1.6vw,1.25rem)] font-medium text-white/90"
+          >
             {MAIN_SUB}
           </p>
         </div>
 
         <div ref={finalRef} className="max-w-3xl" style={HIDDEN_TEXT}>
-          <p className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] font-medium leading-[1.1] text-ink glow-text">
+          <p className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] font-medium leading-[1.1] text-white glow-text">
             <Words text={FINAL_LINE_1} />
           </p>
-          <p className="font-display mt-2 text-[clamp(1.15rem,2.4vw,1.9rem)] leading-snug text-ink-soft">
+          <p className="font-display mt-2 text-[clamp(1.15rem,2.4vw,1.9rem)] leading-snug text-[#FFCC80]">
             <Words text={FINAL_LINE_2} />
           </p>
           <div className="mt-6 flex justify-center">
@@ -752,22 +762,15 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
   );
 };
 
-const BrandMark: React.FC = () => (
-  <div className="absolute left-4 top-4 z-20 rounded-full bg-cream/85 px-4 py-2 shadow-[var(--shadow-soft)] backdrop-blur-md sm:left-6 sm:top-6">
-    <p className="font-display text-base leading-none text-ink">Aline Matos</p>
-    <p className="mt-1 text-[0.68rem] font-medium uppercase tracking-[0.12em] text-ink-soft">Planos de saúde</p>
-  </div>
-);
-
 const ScrollCue: React.FC<{ hidden?: boolean }> = ({ hidden }) => (
   <button
     type="button"
     onClick={() => scrollToTarget('#imprevistos')}
-    className="scroll-cue inline-flex min-h-11 min-w-11 flex-col items-center gap-1 rounded-full px-3 py-1 text-sm font-medium text-ink"
+    className="scroll-cue inline-flex min-h-11 min-w-11 flex-col items-center gap-1 rounded-full px-3 py-1 text-sm font-medium text-white"
     tabIndex={hidden ? -1 : 0}
     aria-label="Rolar para continuar"
   >
-    <span className="rounded-full bg-cream/85 px-3 py-1 backdrop-blur-sm">Role para continuar</span>
+    <span className="rounded-full bg-white/90 px-3 py-1 text-brand-dark">Role para continuar</span>
     <ChevronDown className="h-5 w-5" aria-hidden="true" />
   </button>
 );

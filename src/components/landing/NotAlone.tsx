@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Ambulance, Baby, FlaskConical, Footprints, Hand, Smile, Stethoscope } from 'lucide-react';
-import { drawSvg, gsap, prefersReducedMotion, onIdle, ScrollTrigger } from '../../lib/motion';
+import { drawSvg, gsap, HEADER_HEIGHT, prefersReducedMotion, onIdle, ScrollTrigger } from '../../lib/motion';
 
 const PILLARS = [
   {
@@ -15,14 +15,14 @@ const PILLARS = [
     anim: 'anim-beat',
     title: 'Emergências',
     text: 'Pronto-socorro para quando o susto não espera a hora.',
-    tint: 'bg-babyblue-soft text-[#3f6f91]',
+    tint: 'bg-babyblue-soft text-brand',
   },
   {
     Icon: FlaskConical,
     anim: 'anim-wobble',
     title: 'Exames',
     text: 'Para entender o que está acontecendo e cuidar com segurança.',
-    tint: 'bg-sage-soft text-sage-deep',
+    tint: 'bg-sage-soft text-health',
   },
 ];
 
@@ -89,7 +89,7 @@ export const NotAlone: React.FC = () => {
           ease: 'none',
           scrollTrigger: {
             trigger: pinRef.current,
-            start: 'top top',
+            start: `top ${HEADER_HEIGHT}px`,
             end: () => `+=${distance()}`,
             pin: true,
             scrub: 0.8,
@@ -105,7 +105,7 @@ export const NotAlone: React.FC = () => {
             ease: 'none',
             scrollTrigger: {
               trigger: pinRef.current,
-              start: 'top top',
+              start: `top ${HEADER_HEIGHT}px`,
               end: () => `+=${distance()}`,
               scrub: 0.8,
               invalidateOnRefresh: true,
@@ -156,13 +156,13 @@ export const NotAlone: React.FC = () => {
     <section
       id="voce-nao-esta-sozinho"
       ref={sectionRef}
-      className="relative bg-gradient-to-b from-cream via-babyblue-soft/60 to-cream"
+      className="relative bg-cream-deep"
       aria-labelledby="titulo-sozinho"
     >
       <div className="mx-auto max-w-6xl px-5 pt-24 sm:pt-32">
         <div className="na-title mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#3f6f91]">Um cuidado que acompanha</p>
-          <h2 id="titulo-sozinho" className="font-display mt-4 text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.1] text-ink">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-brand">Um cuidado que acompanha</p>
+          <h2 id="titulo-sozinho" className="font-display mt-4 text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.1] text-brand">
             Com o Plano de Saúde, você não está sozinho.
           </h2>
         </div>
@@ -178,7 +178,7 @@ export const NotAlone: React.FC = () => {
                   <Icon className="h-8 w-8" strokeWidth={1.5} aria-hidden="true" />
                 </span>
               </span>
-              <h3 className="font-display mt-5 text-2xl text-ink">{title}</h3>
+              <h3 className="font-display mt-5 text-2xl text-brand">{title}</h3>
               <p className="mt-2 text-base text-ink-soft">{text}</p>
             </li>
           ))}
@@ -188,7 +188,7 @@ export const NotAlone: React.FC = () => {
       {/* Linha do tempo do primeiro ano */}
       <div ref={pinRef} className={reduced ? 'px-5 py-24' : 'flex min-h-[100svh] flex-col justify-center overflow-hidden py-16'}>
         <div className="mx-auto w-full max-w-6xl px-5">
-          <h3 className="font-display text-[clamp(1.6rem,3.2vw,2.4rem)] leading-tight text-ink">
+          <h3 className="font-display text-[clamp(1.6rem,3.2vw,2.4rem)] leading-tight text-brand">
             O primeiro ano, conquista por conquista
           </h3>
           <p className="mt-2 max-w-xl text-base text-ink-soft">
@@ -220,13 +220,15 @@ export const NotAlone: React.FC = () => {
                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-peach-soft text-peach-deep">
                   <Icon className="h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
                 </span>
-                <span className="font-display text-5xl leading-none text-ink/10" aria-hidden="true">
-                  0{i + 1}
-                </span>
+                <span
+                  className="font-display text-5xl leading-none text-ink/10 before:content-[attr(data-n)]"
+                  data-n={`0${i + 1}`}
+                  aria-hidden="true"
+                />
               </div>
               <div className="milestone-body mt-6">
                 <p className="text-sm font-semibold uppercase tracking-[0.12em] text-sage-deep">{age}</p>
-                <h4 className="font-display mt-2 text-2xl text-ink">{title}</h4>
+                <h4 className="font-display mt-2 text-2xl text-brand">{title}</h4>
                 <p className="mt-3 text-base text-ink-soft">{care}</p>
               </div>
             </li>

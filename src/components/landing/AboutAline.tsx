@@ -94,7 +94,7 @@ export const AboutAline: React.FC = () => {
         {/* Apresentação (texto original da página) */}
         <div className="about-text space-y-6 lg:col-span-7">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-sage-deep">Quem vai cuidar da sua escolha</p>
-          <h2 id="titulo-aline" className="font-display text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.1] text-ink">
+          <h2 id="titulo-aline" className="font-display text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.1] text-brand">
             Aline Matos
             <span className="mt-2 block text-[clamp(1.1rem,2vw,1.4rem)] font-normal text-ink-soft">
               Revendedora de planos de saúde há mais de 15 anos

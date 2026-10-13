@@ -10,6 +10,9 @@ export const prefersReducedMotion = (): boolean =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/** Altura do cabeçalho fixo (px) */
+export const HEADER_HEIGHT = 64;
+
 let lenis: Lenis | null = null;
 
 /** Rolagem suave (Lenis) sincronizada com o ScrollTrigger. Desligada com movimento reduzido. */
@@ -35,7 +38,7 @@ export function scrollToTarget(target: string | HTMLElement) {
   const el = typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
   if (!el) return;
   if (lenis) {
-    lenis.scrollTo(el, { offset: 0, duration: 1.4 });
+    lenis.scrollTo(el, { offset: -HEADER_HEIGHT, duration: 1.4 });
   } else {
     el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   }

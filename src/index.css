@@ -1,34 +1,43 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   Identidade visual: base suave (off-white, pêssego, azul-bebê, sálvia)
-   com o verde-esmeralda da marca da Aline como cor de destaque nos botões.
+   Identidade visual institucional:
+   azul #1976D2 (estrutura e títulos), verde #388E3C (selos e vantagens),
+   branco #FFFFFF e cinza #F5F5F5 (fundos), laranja #FF8F00 (botões de conversão).
+   Os nomes antigos dos tokens foram mantidos para não espalhar mudanças pelos componentes.
    ------------------------------------------------------------------ */
 @theme {
-  --color-cream: #faf7f2;
-  --color-cream-deep: #f3ede4;
-  --color-peach: #f6d5c3;
-  --color-peach-soft: #fbe9df;
-  --color-peach-deep: #b85f36; /* pêssego intenso para títulos (contraste AA em texto grande) */
-  --color-babyblue: #cfe3f0;
-  --color-babyblue-soft: #e7f1f8;
-  --color-sage: #b8cbb8;
-  --color-sage-soft: #dfe8df;
-  --color-sage-deep: #4f6b4f;
-  --color-ink: #2e2e2e;
-  --color-ink-soft: #57524d;
-  --color-brand: #047857; /* verde da marca, escurecido para texto branco com contraste AA */
-  --color-brand-hover: #065f46;
-  --color-brand-soft: #d6efe6;
+  --color-cream: #ffffff; /* fundo principal */
+  --color-cream-deep: #f5f5f5; /* fundo secundário */
+  --color-peach: #bbdefb;
+  --color-peach-soft: #e3f2fd;
+  --color-peach-deep: #1976d2; /* destaque em títulos */
+  --color-babyblue: #bbdefb;
+  --color-babyblue-soft: #e3f2fd;
+  --color-sage: #c8e6c9;
+  --color-sage-soft: #e8f5e9;
+  --color-sage-deep: #2e7d32; /* verde para textos pequenos (contraste AA) */
+  --color-health: #388e3c; /* verde saúde: selos, ícones e checkmarks */
+  --color-ink: #263238;
+  --color-ink-soft: #546e7a;
+  --color-line: #e0e0e0;
+  --color-brand: #1976d2; /* azul principal */
+  --color-brand-hover: #1565c0;
+  --color-brand-dark: #0d47a1;
+  --color-brand-soft: #e3f2fd;
+  --color-cta: #ff8f00; /* laranja exclusivo dos botões de conversão */
+  --color-cta-hover: #f57c00;
+  --color-cta-ink: #1f1f1f; /* texto escuro sobre o laranja: contraste AA */
 
   --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --shadow-soft: 0 1px 2px rgb(46 46 46 / 0.04), 0 8px 24px -12px rgb(46 46 46 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(46 46 46 / 0.04), 0 18px 40px -18px rgb(46 46 46 / 0.22);
+  --shadow-soft: 0 1px 2px rgb(38 50 56 / 0.05), 0 8px 24px -12px rgb(38 50 56 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(38 50 56 / 0.05), 0 18px 40px -18px rgb(38 50 56 / 0.24);
 }
 
 html {
+  scroll-padding-top: 72px;
   background-color: var(--color-cream);
   color: var(--color-ink);
   -webkit-text-size-adjust: 100%;
@@ -60,7 +69,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-peach);
+  background: var(--color-babyblue);
   color: var(--color-ink);
 }
 
@@ -94,7 +103,11 @@ body {
   min-height: 560px;
   overflow: hidden;
   isolation: isolate;
-  background: var(--color-cream);
+  background: var(--color-brand-hover);
+}
+.has-header .hero {
+  height: calc(100vh - 64px);
+  height: calc(100svh - 64px);
 }
 
 .hero-media,
@@ -125,17 +138,16 @@ body {
   z-index: 0;
   overflow: hidden;
   background:
-    radial-gradient(60% 50% at 18% 22%, rgb(246 213 195 / 0.85), transparent 70%),
-    radial-gradient(55% 45% at 85% 30%, rgb(207 227 240 / 0.9), transparent 70%),
-    radial-gradient(70% 55% at 55% 95%, rgb(184 203 184 / 0.7), transparent 70%),
-    var(--color-cream);
+    radial-gradient(60% 55% at 15% 20%, rgb(66 165 245 / 0.55), transparent 70%),
+    radial-gradient(55% 50% at 88% 30%, rgb(13 71 161 / 0.55), transparent 70%),
+    linear-gradient(160deg, #1565c0 0%, #1976d2 55%, #1e88e5 100%);
   transition: filter 1.1s ease, transform 1.1s ease;
 }
 
 .hero-fallback .blob {
   position: absolute;
   border-radius: 999px;
-  opacity: 0.6;
+  opacity: 0.35;
   background: radial-gradient(closest-side, var(--blob) 0%, transparent 100%);
   animation: drift 18s ease-in-out infinite alternate;
   will-change: transform;
@@ -149,7 +161,7 @@ body {
   aspect-ratio: 1;
   translate: -50% -50%;
   border-radius: 999px;
-  background: radial-gradient(circle, rgb(255 236 214 / 0.95) 0%, rgb(246 213 195 / 0.55) 35%, transparent 70%);
+  background: radial-gradient(circle, rgb(255 255 255 / 0.28) 0%, rgb(187 222 251 / 0.18) 35%, transparent 70%);
   opacity: 0;
   scale: 0.85;
   transition: opacity 1.6s ease, scale 2.4s ease;
@@ -171,7 +183,7 @@ body {
 .hero-scrim {
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to top, rgb(30 26 22 / 0.62) 0%, rgb(30 26 22 / 0.28) 30%, transparent 55%);
+  background: linear-gradient(to top, rgb(13 71 161 / 0.72) 0%, rgb(13 71 161 / 0.32) 30%, transparent 55%);
   opacity: 0;
   transition: opacity 0.8s ease;
 }
@@ -179,11 +191,11 @@ body {
   opacity: 1;
 }
 
-/* Véu claro no terço superior, no momento do sorriso */
+/* Véu azul translúcido no terço superior, no momento do sorriso */
 .hero-veil {
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgb(250 247 242 / 0.86) 0%, rgb(250 247 242 / 0.6) 30%, rgb(250 247 242 / 0) 52%);
+  background: linear-gradient(to bottom, rgb(13 71 161 / 0.82) 0%, rgb(21 101 192 / 0.6) 32%, rgb(21 101 192 / 0) 55%);
   opacity: 0;
   transition: opacity 1.2s ease;
 }
@@ -194,7 +206,7 @@ body {
 }
 @media (max-width: 767px) {
   .hero-veil {
-    background: linear-gradient(to bottom, rgb(250 247 242 / 0.9) 0%, rgb(250 247 242 / 0.66) 38%, rgb(250 247 242 / 0) 62%);
+    background: linear-gradient(to bottom, rgb(13 71 161 / 0.86) 0%, rgb(21 101 192 / 0.66) 40%, rgb(21 101 192 / 0) 64%);
   }
 }
 
@@ -243,19 +255,15 @@ body {
   font-size: clamp(1.6rem, 4.6vw, 3.1rem);
   line-height: 1.15;
   color: #fff;
-  text-shadow: 0 2px 18px rgb(0 0 0 / 0.45), 0 1px 3px rgb(0 0 0 / 0.5);
+  text-shadow: 0 2px 18px rgb(13 71 161 / 0.55), 0 1px 3px rgb(0 0 0 / 0.4);
   opacity: 0;
-}
-.hero[data-mode="fallback"] .narrative-line {
-  color: var(--color-ink);
-  text-shadow: 0 1px 20px rgb(250 247 242 / 0.9);
 }
 
 .top-message {
   position: absolute;
   inset: 0 0 auto 0;
   z-index: 3;
-  padding: clamp(5.5rem, 13svh, 8rem) 1.25rem 0;
+  padding: clamp(3.5rem, 10svh, 6.5rem) 1.25rem 0;
   display: grid;
   justify-items: center;
   text-align: center;
@@ -269,7 +277,7 @@ body {
 }
 
 .glow-text {
-  text-shadow: 0 0 28px rgb(246 213 195 / 0.95), 0 0 2px rgb(250 247 242 / 0.8);
+  text-shadow: 0 0 26px rgb(255 204 128 / 0.45), 0 2px 14px rgb(13 71 161 / 0.45);
 }
 
 .btn-primary {
@@ -280,19 +288,19 @@ body {
   min-height: 52px;
   padding: 0.85rem 1.75rem;
   border-radius: 999px;
-  background: var(--color-brand);
-  color: #fff;
-  font-weight: 600;
+  background: var(--color-cta);
+  color: var(--color-cta-ink);
+  font-weight: 700;
   font-size: 1.02rem;
   letter-spacing: 0.005em;
-  box-shadow: 0 10px 26px -12px rgb(4 120 87 / 0.65);
+  box-shadow: 0 10px 26px -12px rgb(245 124 0 / 0.7);
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   text-decoration: none;
 }
 .btn-primary:hover {
-  background: var(--color-brand-hover);
+  background: var(--color-cta-hover);
   transform: translateY(-2px);
-  box-shadow: 0 16px 32px -14px rgb(4 120 87 / 0.75);
+  box-shadow: 0 16px 32px -14px rgb(245 124 0 / 0.8);
 }
 
 .btn-ghost {
@@ -303,11 +311,11 @@ body {
   min-height: 44px;
   padding: 0.55rem 1.1rem;
   border-radius: 999px;
-  background: rgb(250 247 242 / 0.82);
-  color: var(--color-ink);
-  font-weight: 500;
+  background: rgb(255 255 255 / 0.9);
+  color: var(--color-brand-dark);
+  font-weight: 600;
   font-size: 0.92rem;
-  border: 1px solid rgb(46 46 46 / 0.1);
+  border: 1px solid rgb(25 118 210 / 0.25);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: background-color 0.25s ease;
@@ -320,8 +328,8 @@ body {
   animation: pulse 2.4s ease-in-out infinite;
 }
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 10px 26px -12px rgb(4 120 87 / 0.65), 0 0 0 0 rgb(4 120 87 / 0.35); }
-  50% { box-shadow: 0 10px 26px -12px rgb(4 120 87 / 0.65), 0 0 0 14px rgb(4 120 87 / 0); }
+  0%, 100% { box-shadow: 0 10px 26px -12px rgb(245 124 0 / 0.7), 0 0 0 0 rgb(255 143 0 / 0.45); }
+  50% { box-shadow: 0 10px 26px -12px rgb(245 124 0 / 0.7), 0 0 0 14px rgb(255 143 0 / 0); }
 }
 
 .scroll-cue {

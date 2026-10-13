@@ -17,7 +17,7 @@ const CARDS = [
     title: 'Alergia inesperada',
     text: 'Atendimento de emergência e exames para identificar a causa.',
     bg: 'bg-babyblue-soft',
-    fg: 'text-[#3f6f91]',
+    fg: 'text-brand',
   },
   {
     Icon: Hospital,
@@ -25,7 +25,7 @@ const CARDS = [
     title: 'Um susto que não espera a hora',
     text: 'Pronto-socorro e rede hospitalar preparados para o que vier.',
     bg: 'bg-sage-soft',
-    fg: 'text-sage-deep',
+    fg: 'text-health',
   },
 ];
 
@@ -105,7 +105,7 @@ export const Unpredictable: React.FC = () => {
       <div className="mx-auto max-w-6xl">
         <div className="reveal-title mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-sage-deep">O que ninguém conta no enxoval</p>
-          <h2 id="titulo-imprevistos" className="font-display mt-4 text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.1] text-ink">
+          <h2 id="titulo-imprevistos" className="font-display mt-4 text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.1] text-brand">
             Mas tem coisas que não dá pra prever.
           </h2>
         </div>
@@ -134,7 +134,7 @@ export const Unpredictable: React.FC = () => {
             <path
               d={PATH_H}
               fill="none"
-              stroke="#b85f36"
+              stroke="#1976d2"
               strokeOpacity="0.45"
               strokeWidth="2.5"
               strokeLinecap="round"
@@ -165,7 +165,7 @@ export const Unpredictable: React.FC = () => {
             <path
               d={PATH_V}
               fill="none"
-              stroke="#b85f36"
+              stroke="#1976d2"
               strokeOpacity="0.45"
               strokeWidth="2.5"
               strokeLinecap="round"
@@ -186,7 +186,7 @@ export const Unpredictable: React.FC = () => {
                     <Icon className="h-10 w-10" strokeWidth={1.5} aria-hidden="true" />
                   </span>
                 </span>
-                <h3 className="font-display mt-6 text-2xl leading-snug text-ink">{title}</h3>
+                <h3 className="font-display mt-6 text-2xl leading-snug text-brand">{title}</h3>
                 <p className="mt-3 text-base text-ink-soft">{text}</p>
               </li>
             ))}

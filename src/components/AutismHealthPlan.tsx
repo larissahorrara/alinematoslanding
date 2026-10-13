@@ -266,7 +266,7 @@ export const AutismHealthPlan: React.FC = () => {
           <div className="shrink-0 w-full sm:w-auto">
             <button
               onClick={() => openWhatsApp('Olá, Aline! Li o artigo sobre plano de saúde para autistas (TEA) no seu site e gostaria de uma orientação especializada para minha família.')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-brand hover:bg-brand-hover text-white font-semibold text-sm sm:text-base shadow-xl transition-transform hover:scale-105 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-cta hover:bg-cta-hover text-cta-ink font-bold font-semibold text-sm sm:text-base shadow-xl transition-transform hover:scale-105 cursor-pointer"
             >
               <MessageCircle className="w-5 h-5" />
               <span>Falar com a Aline no WhatsApp</span>
