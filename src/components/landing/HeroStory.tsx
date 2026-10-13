@@ -173,7 +173,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
   const modeRef = useRef<Mode>('pending');
   const onEndedRef = useRef(onEnded);
   onEndedRef.current = onEnded;
-  const finishRef = useRef<() => void>(() => undefined);
+  const videoEndRef = useRef<() => void>(() => undefined);
   const replayRef = useRef<() => void>(() => undefined);
 
   // Estado visual atual de cada camada (para animar somente quando muda)
@@ -241,6 +241,16 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
       update(DURATION);
       setStage('ended');
       cancelAnimationFrame(s.raf);
+      gsap.to(endControlsRef.current, { autoAlpha: 1, duration: 0.8, delay: 0.3 });
+      setEnded(true);
+      onEndedRef.current?.();
+    };
+
+    // Vídeo chegou ao fim: na primeira vez libera o botão do WhatsApp e os controles,
+    // mas o roteiro segue ligado ao vídeo, que recomeça do zero com as frases no mesmo ritmo
+    const roundDone = () => {
+      if (s.finished) return;
+      s.finished = true;
       gsap.to(endControlsRef.current, { autoAlpha: 1, duration: 0.8, delay: 0.3 });
       setEnded(true);
       onEndedRef.current?.();
@@ -481,7 +491,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
       return () => hero.removeEventListener('pointermove', onPointer);
     }, hero);
 
-    finishRef.current = finish;
+    videoEndRef.current = roundDone;
 
     // Exposto para o botão "Assistir novamente"
     replayRef.current = () => {
@@ -508,12 +518,12 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
 
   const hasVideo = !!media && media.sources.length > 0;
 
-  // Vídeo terminou: a chamada final fica fixa na tela e o vídeo volta a rodar em looping
+  // Vídeo terminou: volta ao início em looping e as frases acompanham de novo, no mesmo tempo da primeira rodada
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     const onVideoEnded = () => {
-      finishRef.current();
+      videoEndRef.current();
       v.currentTime = 0;
       v.play().catch(() => undefined);
     };
