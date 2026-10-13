@@ -1,9 +1,13 @@
 # Vídeo do hero
 
-A página já está pronta para o vídeo de 28 segundos. Enquanto os arquivos abaixo não existirem, o hero
-roda a mesma narrativa (textos, ícones, sorriso e chamada final) sobre um fundo ilustrado.
+O vídeo atual foi montado a partir do clipe de 11 s do bebê engatinhando (4K, 25 fps, sem som):
 
-Envie para esta pasta (`public/video`) os arquivos com exatamente estes nomes:
+- 0 a 19 s: câmera lenta (com interpolação de quadros) do trecho em que o bebê engatinha até sorrir;
+- 19 a 28 s: o quadro do sorriso fica congelado, com aproximação lenta;
+- versão 9:16 recortada do 4K, acompanhando o bebê.
+
+Para trocar o vídeo, substitua os arquivos desta pasta (`public/video`) mantendo exatamente estes nomes.
+Se algum arquivo faltar, o hero roda a mesma narrativa sobre um fundo azul ilustrado.
 
 | Arquivo | Uso |
 |---|---|
@@ -20,8 +24,9 @@ Não é preciso mudar nenhum código: a página detecta os arquivos sozinha.
 ## Especificações
 
 - 28 s, 24 fps, sem texto, logotipos ou grafismos no vídeo (os textos são camadas da página).
-- Deixe o terço superior do quadro livre nos 5 s finais (é onde aparece a mensagem principal).
-- Trilha e locução (opcional) embutidas no próprio vídeo; a página oferece o botão "Ativar som".
+- Nos 9 s finais, a mensagem principal aparece à esquerda no computador e embaixo no celular.
+- Trilha e locução (opcional) embutidas no próprio vídeo. Se o novo vídeo tiver som, mude
+  `HERO_VIDEO_HAS_AUDIO` para `true` em `src/lib/media.ts` para exibir o botão "Ativar som".
 
 ## Tempos que a página usa (contados do início do vídeo)
 

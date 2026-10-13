@@ -10,6 +10,9 @@
  * Enquanto os arquivos não existirem, o hero roda a mesma narrativa sobre um fundo ilustrado.
  */
 
+/** O vídeo atual não tem trilha sonora; mude para true se enviar uma versão com som (mostra o botão "Ativar som") */
+export const HERO_VIDEO_HAS_AUDIO = false;
+
 export interface HeroMedia {
   /** Fontes de vídeo encontradas (vazio quando ainda não há vídeo) */
   sources: { src: string; type: string }[];

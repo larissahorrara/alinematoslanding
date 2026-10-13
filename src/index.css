@@ -191,11 +191,12 @@ body {
   opacity: 1;
 }
 
-/* Véu azul translúcido no terço superior, no momento do sorriso */
+/* Véu azul translúcido no momento do sorriso: à esquerda no computador (o bebê fica à direita),
+   embaixo no celular */
 .hero-veil {
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgb(13 71 161 / 0.82) 0%, rgb(21 101 192 / 0.6) 32%, rgb(21 101 192 / 0) 55%);
+  background: linear-gradient(to top, rgb(13 71 161 / 0.92) 0%, rgb(21 101 192 / 0.72) 34%, rgb(21 101 192 / 0) 62%);
   opacity: 0;
   transition: opacity 1.2s ease;
 }
@@ -204,9 +205,9 @@ body {
 .hero[data-stage="ended"] .hero-veil {
   opacity: 1;
 }
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .hero-veil {
-    background: linear-gradient(to bottom, rgb(13 71 161 / 0.86) 0%, rgb(21 101 192 / 0.66) 40%, rgb(21 101 192 / 0) 64%);
+    background: linear-gradient(to right, rgb(13 71 161 / 0.9) 0%, rgb(21 101 192 / 0.7) 34%, rgb(21 101 192 / 0) 64%);
   }
 }
 
@@ -247,7 +248,7 @@ body {
 }
 .narrative-line {
   grid-area: 1 / 1;
-  max-width: 22ch;
+  max-width: 24ch;
   margin: 0;
   text-align: center;
   font-family: var(--font-display);
@@ -261,13 +262,23 @@ body {
 
 .top-message {
   position: absolute;
-  inset: 0 0 auto 0;
+  inset: auto 0 0 0;
   z-index: 3;
-  padding: clamp(3.5rem, 10svh, 6.5rem) 1.25rem 0;
+  padding: 0 1.25rem clamp(5.5rem, 14svh, 8rem);
   display: grid;
   justify-items: center;
   text-align: center;
   pointer-events: none;
+}
+@media (min-width: 768px) {
+  .top-message {
+    inset: 0 auto 0 0;
+    width: min(46rem, 52vw);
+    padding: 0 0 0 clamp(2rem, 6vw, 6rem);
+    align-content: center;
+    justify-items: start;
+    text-align: left;
+  }
 }
 .top-message > * {
   grid-area: 1 / 1;
@@ -443,4 +454,33 @@ body {
     mask-image: none;
     -webkit-mask-image: none;
   }
+}
+
+/* Destaque laranja que cresce sob cada frase da narrativa */
+.narrative-line .accent {
+  display: block;
+  width: 4.5rem;
+  height: 4px;
+  margin: 0.9rem auto 0;
+  border-radius: 999px;
+  background: var(--color-cta);
+  transform-origin: left center;
+}
+
+/* Barra de progresso da história, na base do hero */
+.story-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  height: 4px;
+  background: rgb(255 255 255 / 0.18);
+}
+.story-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--color-cta);
+  transform-origin: left center;
+  transform: scaleX(0);
 }

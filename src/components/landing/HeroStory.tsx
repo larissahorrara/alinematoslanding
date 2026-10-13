@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Droplet, Hospital, MessageCircle, RotateCcw, Syringe, Thermometer, Volume2, VolumeX } from 'lucide-react';
 import { gsap, ScrollTrigger, prefersReducedMotion, scrollToTarget } from '../../lib/motion';
-import { loadHeroMedia, type HeroMedia } from '../../lib/media';
+import { HERO_VIDEO_HAS_AUDIO, loadHeroMedia, type HeroMedia } from '../../lib/media';
 import { KIDS_PLAN_URL } from '../../utils/whatsapp';
 import { Words } from './Words';
 
@@ -136,6 +136,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
   const finalButtonRef = useRef<HTMLAnchorElement>(null);
   const endControlsRef = useRef<HTMLDivElement>(null);
   const pathMaskRef = useRef<SVGPathElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
   const mediaRef = useRef<HeroMedia | null>(null);
   const modeRef = useRef<Mode>('pending');
@@ -238,11 +239,22 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
           });
         }
         if (idx >= 0) {
-          gsap.fromTo(
-            narrativeRefs.current[idx],
-            { autoAlpha: 0, y: 16, filter: 'blur(6px)' },
-            { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out', overwrite: true },
-          );
+          // Frase revelada palavra por palavra, com o traço laranja crescendo embaixo
+          const line = narrativeRefs.current[idx];
+          if (line) {
+            gsap.killTweensOf(line);
+            gsap.set(line, { autoAlpha: 1, y: 0, filter: 'blur(0px)' });
+            gsap.fromTo(
+              line.querySelectorAll('.word'),
+              { opacity: 0, y: 22, scale: 0.94, filter: 'blur(8px)' },
+              { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.6, ease: 'back.out(1.7)', stagger: 0.07 },
+            );
+            gsap.fromTo(
+              line.querySelector('.accent'),
+              { scaleX: 0 },
+              { scaleX: 1, duration: 0.8, ease: 'power3.out', delay: 0.25 },
+            );
+          }
         }
         s.narrative = idx;
       }
@@ -308,6 +320,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
     const loop = () => {
       const t = currentTime();
       update(t);
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${Math.min(t / DURATION, 1)})`;
       if (modeRef.current === 'fallback' && t >= DURATION) {
         finish();
         return;
@@ -660,7 +673,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
       </div>
 
       {/* Botão de som (navegadores bloqueiam áudio automático) */}
-      {hasVideo && mode === 'video' && (
+      {hasVideo && mode === 'video' && HERO_VIDEO_HAS_AUDIO && (
         <button
           type="button"
           onClick={toggleSound}
@@ -698,7 +711,8 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
             }}
             className="narrative-line"
           >
-            {n.text}
+            <Words text={n.text} />
+            <span className="accent" />
           </p>
         ))}
       </div>
@@ -708,7 +722,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
         ))}
       </div>
 
-      {/* Momento do sorriso e chamada final (terço superior) */}
+      {/* Momento do sorriso e chamada final (à esquerda no computador, embaixo no celular) */}
       <div className="top-message">
         <div ref={mainRef} className="max-w-3xl" style={HIDDEN_TEXT}>
           <p className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] font-medium leading-[1.1] text-white glow-text">
@@ -717,7 +731,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
           <p
             ref={mainSubRef}
             style={HIDDEN_TEXT}
-            className="mx-auto mt-3 max-w-xl text-[clamp(1rem,1.6vw,1.25rem)] font-medium text-white/90"
+            className="mx-auto mt-3 max-w-xl text-[clamp(1rem,1.6vw,1.25rem)] font-medium text-white/90 md:mx-0"
           >
             {MAIN_SUB}
           </p>
@@ -730,7 +744,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
           <p className="font-display mt-2 text-[clamp(1.15rem,2.4vw,1.9rem)] leading-snug text-[#FFCC80]">
             <Words text={FINAL_LINE_2} />
           </p>
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex justify-center md:justify-start">
             <a
               ref={finalButtonRef}
               style={HIDDEN}
@@ -747,16 +761,24 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
       </div>
 
       {/* Fim do vídeo: assistir novamente + indicador de rolagem */}
-      <div
-        ref={endControlsRef}
-        style={HIDDEN}
-        className="absolute inset-x-0 bottom-5 z-10 flex flex-col items-center gap-4 sm:bottom-7"
-      >
-        <button type="button" onClick={replay} className="btn-ghost" tabIndex={ended ? 0 : -1}>
+      <div ref={endControlsRef} style={HIDDEN} className="pointer-events-none absolute inset-0 z-10">
+        <button
+          type="button"
+          onClick={replay}
+          className="btn-ghost pointer-events-auto absolute right-4 top-4 sm:right-6 sm:top-6"
+          tabIndex={ended ? 0 : -1}
+        >
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Assistir novamente
         </button>
-        <ScrollCue hidden={!ended} />
+        <div className="pointer-events-auto absolute inset-x-0 bottom-3 flex justify-center sm:bottom-5">
+          <ScrollCue hidden={!ended} />
+        </div>
+      </div>
+
+      {/* Progresso da história */}
+      <div className="story-progress" aria-hidden="true">
+        <span ref={progressRef} />
       </div>
     </section>
   );
