@@ -8,7 +8,7 @@ export const SiteFooter: React.FC = () => (
   <footer className="bg-brand-dark px-5 pb-28 pt-16 text-white sm:pb-16">
     <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2 lg:grid-cols-4">
       <div className="lg:col-span-1">
-        <p className="font-display text-2xl leading-none text-white">Aline Matos</p>
+        <p className="font-logo text-4xl leading-none text-white">Aline Matos</p>
         <p className="mt-2 text-sm text-[#d6e6fa]">Revendedora de planos de saúde há mais de 15 anos</p>
       </div>
 

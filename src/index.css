@@ -85,6 +85,13 @@ body {
   letter-spacing: -0.022em;
 }
 
+/* Assinatura "Aline Matos": letra cursiva só no nome, contrastando com a Inter do restante do site */
+.font-logo {
+  font-family: "Dancing Script Variable", "Dancing Script", cursive;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+}
+
 /* Palavras reveladas uma a uma */
 .word {
   display: inline-block;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, MessageCircle, ShieldCheck, X } from 'lucide-react';
+import { Menu, MessageCircle, X } from 'lucide-react';
 import { scrollToTarget } from '../../lib/motion';
 import { KIDS_PLAN_URL } from '../../utils/whatsapp';
 
@@ -30,15 +30,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onHome }) => {
   return (
     <header className="sticky top-0 z-40 h-16 border-b border-line bg-white">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-5">
-        <a href="#inicio" onClick={handleClick('#inicio')} className="flex min-h-11 items-center gap-2.5">
-          <span className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-white min-[400px]:flex">
-            <ShieldCheck className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <span className="leading-none">
-            <span className="font-display block whitespace-nowrap text-lg text-brand">Aline Matos</span>
-            <span className="mt-1 hidden whitespace-nowrap text-[0.68rem] font-medium uppercase tracking-[0.12em] text-ink-soft sm:block">
-              Planos de saúde
-            </span>
+        <a href="#inicio" onClick={handleClick('#inicio')} className="flex min-h-11 flex-col justify-center" aria-label="Aline Matos, planos de saúde — início">
+          <span className="font-logo whitespace-nowrap text-[1.9rem] leading-none text-brand sm:text-[2.1rem]">Aline Matos</span>
+          <span className="mt-0.5 hidden whitespace-nowrap pl-1 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ink-soft sm:block">
+            Planos de saúde
           </span>
         </a>
 
