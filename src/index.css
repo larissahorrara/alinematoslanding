@@ -29,7 +29,7 @@
   --color-cta-hover: #f57c00;
   --color-cta-ink: #1f1f1f; /* texto escuro sobre o laranja: contraste AA */
 
-  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* títulos: Inter Bold */
   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --shadow-soft: 0 1px 2px rgb(38 50 56 / 0.05), 0 8px 24px -12px rgb(38 50 56 / 0.14);
@@ -81,8 +81,8 @@ body {
 
 .font-display {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  letter-spacing: -0.01em;
+  font-weight: 700; /* títulos sempre em Inter Bold */
+  letter-spacing: -0.022em;
 }
 
 /* Palavras reveladas uma a uma */
@@ -252,7 +252,8 @@ body {
   margin: 0;
   text-align: center;
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: -0.022em;
   font-size: clamp(1.6rem, 4.6vw, 3.1rem);
   line-height: 1.15;
   color: #fff;
