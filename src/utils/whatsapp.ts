@@ -9,6 +9,13 @@ export const WHATSAPP_DISPLAY = '(31) 9497-1034';
 export const CONSULTANT_NAME = 'Aline Matos';
 export const CONSULTANT_ROLE = 'REVENDEDORA de planos de saúde há mais de 15 anos';
 
+/** Mensagem padrão de todos os botões de contratação da página inicial */
+export const KIDS_PLAN_MESSAGE =
+  'Olá! Vi sua página e quero saber mais sobre plano de saúde para meu filho.';
+
+/** Link direto do WhatsApp com a mensagem padrão da página inicial */
+export const KIDS_PLAN_URL = `https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent(KIDS_PLAN_MESSAGE)}`;
+
 export interface QuoteParams {
   planType?: string;
   lives?: string;

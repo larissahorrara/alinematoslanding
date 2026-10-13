@@ -1,119 +1,113 @@
 /**
- * Landing Page & Portal - Planos de Saúde com Aline Matos
- * REVENDEDORA de planos de saúde há mais de 15 anos
+ * Landing page — Planos de saúde com Aline Matos
+ * Página de rolagem única com narrativa sincronizada ao vídeo do hero,
+ * voltada a pais e mães de bebês e crianças pequenas.
  */
 
-import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
-import { TopPageBanner } from './components/TopPageBanner';
-import { Hero } from './components/Hero';
-import { AboutMe } from './components/AboutMe';
-import { AutismHealthPlan } from './components/AutismHealthPlan';
-import { NewsSection } from './components/NewsSection';
-import { Simulator } from './components/Simulator';
-import { PainPointsSolution } from './components/PainPointsSolution';
-import { PlanTypes } from './components/PlanTypes';
-import { CarriersGrid } from './components/CarriersGrid';
-import { ProcessSteps } from './components/ProcessSteps';
-import { FAQSection } from './components/FAQSection';
-import { QuickContactForm } from './components/QuickContactForm';
-import { Footer } from './components/Footer';
-import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { ScrollTrigger, startSmoothScroll } from './lib/motion';
+import { HeroStory } from './components/landing/HeroStory';
+import { Unpredictable } from './components/landing/Unpredictable';
+import { NotAlone } from './components/landing/NotAlone';
+import { AboutAline } from './components/landing/AboutAline';
+import { FinalCTA } from './components/landing/FinalCTA';
+import { SiteFooter } from './components/landing/SiteFooter';
+import { WhatsAppFab } from './components/landing/WhatsAppFab';
+import { PrivacyDialog } from './components/landing/PrivacyDialog';
+
+// Páginas de guia carregadas sob demanda (deixam a página inicial mais leve)
+const AutismHealthPlan = lazy(() =>
+  import('./components/AutismHealthPlan').then((m) => ({ default: m.AutismHealthPlan })),
+);
+const NewsSection = lazy(() => import('./components/NewsSection').then((m) => ({ default: m.NewsSection })));
+
+type Page = 'home' | 'tea' | 'news';
+
+const pageFromHash = (): Page => {
+  const hash = window.location.hash.toLowerCase();
+  if (hash.includes('autis') || hash.includes('tea')) return 'tea';
+  if (hash.includes('noticia') || hash.includes('news')) return 'news';
+  return 'home';
+};
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'tea' | 'news'>('home');
+  const [page, setPage] = useState<Page>(pageFromHash);
+  const [heroEnded, setHeroEnded] = useState(false);
+
+  useEffect(() => startSmoothScroll(), []);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.toLowerCase();
-      if (hash.includes('autista') || hash.includes('tea')) {
-        setCurrentPage('tea');
-      } else if (hash.includes('noticia') || hash.includes('news')) {
-        setCurrentPage('news');
-      } else if (hash === '' || hash.includes('inicio') || hash.includes('home')) {
-        setCurrentPage('home');
-      }
+    const onHash = () => {
+      const next = pageFromHash();
+      setPage((prev) => {
+        if (prev !== next) window.scrollTo(0, 0);
+        return next;
+      });
     };
-
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  const handleNavigate = (page: 'home' | 'tea' | 'news') => {
-    setCurrentPage(page);
-    if (page === 'tea') {
-      window.location.hash = 'autismo';
-    } else if (page === 'news') {
-      window.location.hash = 'noticias';
-    } else {
-      window.location.hash = '';
-    }
-  };
+  useEffect(() => {
+    document.title =
+      page === 'tea'
+        ? 'Plano de saúde para autistas (TEA) | Aline Matos'
+        : page === 'news'
+          ? 'Notícias sobre saúde suplementar | Aline Matos'
+          : 'Você planeja o berço, o enxoval, a escolinha. E a saúde dele, quem planeja?';
+  }, [page]);
+
+  useEffect(() => {
+    // Recalcula as animações de rolagem quando a página muda ou as imagens terminam de carregar
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 200);
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener('load', onLoad);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener('load', onLoad);
+    };
+  }, [page]);
+
+  if (page !== 'home') {
+    return (
+      <>
+        <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream/90 backdrop-blur-md">
+          <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-3">
+            <a href="#inicio" className="font-display text-xl text-ink">
+              Aline Matos
+            </a>
+            <a href="#inicio" className="btn-ghost">
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Voltar ao início
+            </a>
+          </div>
+        </header>
+        <main>
+          <Suspense fallback={<div className="min-h-[60svh]" />}>
+            {page === 'tea' ? <AutismHealthPlan /> : <NewsSection />}
+          </Suspense>
+          <FinalCTA />
+        </main>
+        <SiteFooter />
+        <WhatsAppFab ready />
+        <PrivacyDialog />
+      </>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white w-full min-w-full overflow-x-hidden">
-      {/* Top Header */}
-      <Header currentPage={currentPage} onNavigate={handleNavigate} />
-
-      {/* Banner / Menu Chamativo no Topo com as 3 Páginas/Guias */}
-      <TopPageBanner currentPage={currentPage} onNavigate={handleNavigate} />
-
-      {/* Conteúdo Dinâmico por Página */}
-      <main className="flex-1 w-full overflow-x-hidden">
-        {currentPage === 'home' && (
-          <>
-            {/* Dobra 1: Hero Principal */}
-            <Hero />
-
-            {/* Dobra 2: Sobre Mim - Trajetória nas Maiores Corretoras de BH */}
-            <AboutMe />
-
-            {/* Dobra 3: Simulador Express em 3 Passos */}
-            <Simulator />
-
-            {/* Dobra 4: Dores x Soluções */}
-            <PainPointsSolution />
-
-            {/* Dobra 5: Categorias de Planos */}
-            <PlanTypes />
-
-            {/* Dobra 6: Operadoras Parceiras & Hospitais de BH */}
-            <CarriersGrid />
-
-            {/* Dobra 7: Como Funciona o Atendimento */}
-            <ProcessSteps />
-
-            {/* Dobra 8: Dúvidas Frequentes */}
-            <FAQSection />
-
-            {/* Dobra 9: Formulário Rápido de Contato */}
-            <QuickContactForm />
-          </>
-        )}
-
-        {currentPage === 'tea' && (
-          <>
-            {/* Página Dedicada: Plano de Saúde para Autistas (TEA) */}
-            <AutismHealthPlan />
-            <QuickContactForm />
-          </>
-        )}
-
-        {currentPage === 'news' && (
-          <>
-            {/* Página Dedicada: Notícias sobre Saúde Suplementar 2024–2026 */}
-            <NewsSection />
-            <QuickContactForm />
-          </>
-        )}
+    <>
+      <main>
+        <HeroStory onEnded={() => setHeroEnded(true)} />
+        <Unpredictable />
+        <NotAlone />
+        <AboutAline />
+        <FinalCTA />
       </main>
-
-      {/* Rodapé com Navegação e Contatos */}
-      <Footer onNavigate={handleNavigate} />
-
-      {/* Botão Flutuante Permanente para o WhatsApp */}
-      <FloatingWhatsApp />
-    </div>
+      <SiteFooter />
+      <WhatsAppFab ready={heroEnded} />
+      <PrivacyDialog />
+    </>
   );
 }
