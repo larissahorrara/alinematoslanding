@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Gerados pelo prepare-build.js
+public/aline*
