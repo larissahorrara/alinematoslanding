@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { HeartHandshake, MessageCircle } from 'lucide-react';
-import { gsap, prefersReducedMotion, onIdle, ScrollTrigger } from '../../lib/motion';
+import { gsap, prefersReducedMotion, onIdle, requestRefresh } from '../../lib/motion';
 import { CARRIERS } from '../../data/carriers';
 import { KIDS_PLAN_URL } from '../../utils/whatsapp';
 
@@ -53,7 +53,7 @@ export const AboutAline: React.FC = () => {
           el.textContent = '0';
         });
       }, section);
-      ScrollTrigger.refresh();
+      requestRefresh();
     });
 
     return () => {
@@ -142,7 +142,7 @@ export const AboutAline: React.FC = () => {
 
           <a href={KIDS_PLAN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
-            Quero contratar
+            Quero minha cotação grátis
           </a>
         </div>
       </div>

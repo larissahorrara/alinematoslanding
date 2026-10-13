@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Droplet, Hospital, Thermometer } from 'lucide-react';
-import { drawSvg, gsap, prefersReducedMotion, onIdle, ScrollTrigger } from '../../lib/motion';
+import { drawSvg, gsap, prefersReducedMotion, onIdle, requestRefresh } from '../../lib/motion';
 
 const CARDS = [
   {
@@ -86,7 +86,7 @@ export const Unpredictable: React.FC = () => {
           });
         });
       }, section);
-      ScrollTrigger.refresh();
+      requestRefresh();
     });
 
     return () => {

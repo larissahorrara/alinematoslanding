@@ -5,7 +5,7 @@
  */
 
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { ScrollTrigger, startSmoothScroll } from './lib/motion';
+import { requestRefresh, startSmoothScroll } from './lib/motion';
 import { HeroStory } from './components/landing/HeroStory';
 import { Unpredictable } from './components/landing/Unpredictable';
 import { NotAlone } from './components/landing/NotAlone';
@@ -15,6 +15,9 @@ import { SiteFooter } from './components/landing/SiteFooter';
 import { WhatsAppFab } from './components/landing/WhatsAppFab';
 import { SiteHeader } from './components/landing/SiteHeader';
 import { PrivacyDialog } from './components/landing/PrivacyDialog';
+import { Testimonials } from './components/landing/Testimonials';
+import { FAQ } from './components/landing/FAQ';
+import { CookieConsent } from './components/landing/CookieConsent';
 
 // Páginas de guia carregadas sob demanda (deixam a página inicial mais leve)
 const AutismHealthPlan = lazy(() =>
@@ -60,13 +63,10 @@ export default function App() {
 
   useEffect(() => {
     // Recalcula as animações de rolagem quando a página muda ou as imagens terminam de carregar
-    const id = window.setTimeout(() => ScrollTrigger.refresh(), 200);
-    const onLoad = () => ScrollTrigger.refresh();
+    requestRefresh(200);
+    const onLoad = () => requestRefresh();
     window.addEventListener('load', onLoad);
-    return () => {
-      window.clearTimeout(id);
-      window.removeEventListener('load', onLoad);
-    };
+    return () => window.removeEventListener('load', onLoad);
   }, [page]);
 
   return (
@@ -79,6 +79,7 @@ export default function App() {
             <Unpredictable />
             <NotAlone />
             <AboutAline />
+            <Testimonials />
           </>
         ) : (
           <Suspense fallback={<div className="min-h-[60svh]" />}>
@@ -86,10 +87,12 @@ export default function App() {
           </Suspense>
         )}
         <FinalCTA />
+        {page === 'home' && <FAQ />}
       </main>
       <SiteFooter />
       <WhatsAppFab ready={page !== 'home' || heroEnded} />
       <PrivacyDialog />
+      <CookieConsent />
     </div>
   );
 }

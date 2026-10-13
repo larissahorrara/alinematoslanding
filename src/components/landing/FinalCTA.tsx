@@ -1,9 +1,10 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { BadgeCheck, CheckCircle2, MessageCircle } from 'lucide-react';
-import { gsap, prefersReducedMotion, onIdle, ScrollTrigger, scrollToTarget } from '../../lib/motion';
+import { gsap, prefersReducedMotion, onIdle, requestRefresh, scrollToTarget } from '../../lib/motion';
 import { loadHeroMedia } from '../../lib/media';
 import { PLAN_TYPES } from '../../data/plans';
-import { KIDS_PLAN_MESSAGE, KIDS_PLAN_URL, WHATSAPP_RAW_NUMBER } from '../../utils/whatsapp';
+import { trackLead } from '../../lib/analytics';
+import { KIDS_PLAN_MESSAGE, KIDS_PLAN_URL, WHATSAPP_RAW_NUMBER, withOrigin } from '../../utils/whatsapp';
 import { openPrivacyPolicy } from './PrivacyDialog';
 
 const formatPhone = (value: string) => {
@@ -14,7 +15,7 @@ const formatPhone = (value: string) => {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
 };
 
-const waUrl = (message: string) => `https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent(message)}`;
+const waUrl = (message: string) => `https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent(withOrigin(message))}`;
 
 /** Campos: fundo branco, borda cinza clara e borda azul quando ativos */
 const inputClass =
@@ -57,7 +58,7 @@ export const FinalCTA: React.FC<{ id?: string }> = ({ id = 'cotacao' }) => {
           scrollTrigger: { trigger: '.plan-grid', start: 'top 80%' },
         });
       }, section);
-      ScrollTrigger.refresh();
+      requestRefresh();
     });
     return () => {
       cancelIdle();
@@ -88,6 +89,7 @@ export const FinalCTA: React.FC<{ id?: string }> = ({ id = 'cotacao' }) => {
     const win = window.open(url, '_blank');
     if (win) win.opener = null;
     else window.location.href = url;
+    trackLead('formulario', 'Cotação rápida');
     setSentUrl(url);
   };
 
@@ -123,7 +125,7 @@ export const FinalCTA: React.FC<{ id?: string }> = ({ id = 'cotacao' }) => {
             className="btn-primary pulse"
           >
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
-            Quero contratar
+            Quero minha cotação grátis
           </a>
         </div>
       </div>
@@ -304,7 +306,7 @@ export const FinalCTA: React.FC<{ id?: string }> = ({ id = 'cotacao' }) => {
                   </label>
                   <button type="submit" className="btn-primary mt-1 w-full">
                     <MessageCircle className="h-5 w-5" aria-hidden="true" />
-                    Quero contratar
+                    Quero minha cotação grátis
                   </button>
                 </form>
               )}

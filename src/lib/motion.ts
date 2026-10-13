@@ -71,7 +71,7 @@ export function drawSvg(svg: SVGElement | null, vars: gsap.TweenVars = {}) {
  * Executa a configuração das animações de rolagem quando o navegador estiver ocioso,
  * tirando esse trabalho do carregamento inicial da página.
  */
-export function onIdle(cb: () => void, timeout = 1500): () => void {
+export function onIdle(cb: () => void, timeout = 4000): () => void {
   const w = window as Window & {
     requestIdleCallback?: (fn: () => void, opts?: { timeout: number }) => number;
     cancelIdleCallback?: (id: number) => void;
@@ -82,4 +82,11 @@ export function onIdle(cb: () => void, timeout = 1500): () => void {
   }
   const id = window.setTimeout(cb, 300);
   return () => window.clearTimeout(id);
+}
+
+let refreshTimer = 0;
+/** Agrupa vários pedidos de recálculo das animações de rolagem em um só (evita travadas no celular) */
+export function requestRefresh(delay = 150) {
+  window.clearTimeout(refreshTimer);
+  refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), delay);
 }

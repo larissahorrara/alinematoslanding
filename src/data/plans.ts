@@ -28,7 +28,7 @@ export const PLAN_TYPES: PlanType[] = [
       'Acomodação em apartamento com direito a acompanhante',
       'Consultas em todas as especialidades médicas',
     ],
-    ctaText: 'Quero contratar',
+    ctaText: 'Quero minha cotação grátis',
     featured: true,
   },
   {

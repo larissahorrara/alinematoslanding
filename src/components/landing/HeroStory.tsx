@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Droplet, Hospital, MessageCircle, RotateCcw, Syringe, Thermometer, Volume2, VolumeX } from 'lucide-react';
-import { gsap, ScrollTrigger, prefersReducedMotion, scrollToTarget } from '../../lib/motion';
+import { BadgeCheck, ChevronDown, Droplet, Hospital, MessageCircle, RotateCcw, Syringe, Thermometer, Volume2, VolumeX } from 'lucide-react';
+import { gsap, requestRefresh, prefersReducedMotion, scrollToTarget } from '../../lib/motion';
 import { HERO_VIDEO_HAS_AUDIO, loadHeroMedia, type HeroMedia } from '../../lib/media';
 import { KIDS_PLAN_URL } from '../../utils/whatsapp';
 import { Words } from './Words';
@@ -246,8 +246,8 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
             gsap.set(line, { autoAlpha: 1, y: 0, filter: 'blur(0px)' });
             gsap.fromTo(
               line.querySelectorAll('.word'),
-              { opacity: 0, y: 22, scale: 0.94, filter: 'blur(8px)' },
-              { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.6, ease: 'back.out(1.7)', stagger: 0.07 },
+              { opacity: 0, y: 22, scale: 0.94 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.7)', stagger: 0.07 },
             );
             gsap.fromTo(
               line.querySelector('.accent'),
@@ -482,7 +482,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
   }, [hasVideo]);
 
   useEffect(() => {
-    if (!reduced) ScrollTrigger.refresh();
+    if (!reduced) requestRefresh();
   }, [media, reduced]);
 
   const toggleSound = () => {
@@ -534,7 +534,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
             </p>
             <a href={KIDS_PLAN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
-              Quero contratar
+              Quero minha cotação grátis
             </a>
           </div>
           <ScrollCue />
@@ -754,7 +754,7 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
               className="btn-primary pulse is-interactive"
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
-              Quero contratar
+              Quero minha cotação grátis
             </a>
           </div>
         </div>
@@ -774,6 +774,18 @@ export const HeroStory: React.FC<HeroStoryProps> = ({ onEnded }) => {
         <div className="pointer-events-auto absolute inset-x-0 bottom-3 flex justify-center sm:bottom-5">
           <ScrollCue hidden={!ended} />
         </div>
+      </div>
+
+      {/* Subtítulo com a promessa e botão de cotação visíveis desde o início */}
+      <div className="hero-quick">
+        <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 backdrop-blur-sm">
+          <BadgeCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
+          Cotação gratuita com quem tem mais de 15 anos de mercado em BH
+        </p>
+        <a href={KIDS_PLAN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !min-h-11 !px-5 !py-2 text-sm">
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          Quero minha cotação grátis
+        </a>
       </div>
 
       {/* Progresso da história */}

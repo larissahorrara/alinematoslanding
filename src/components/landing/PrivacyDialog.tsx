@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import { CONSULTANT_NAME, WHATSAPP_DISPLAY } from '../../utils/whatsapp';
+import { ANALYTICS_ENABLED } from '../../lib/analytics';
 
 const EVENT = 'abrir-politica-privacidade';
 
@@ -60,6 +61,16 @@ export const PrivacyDialog: React.FC = () => {
             O formulário não grava as informações em nenhum servidor desta página: ele apenas monta uma mensagem que é aberta no seu
             WhatsApp. Você vê o texto antes de enviar e decide se quer mandar.
           </p>
+          {ANALYTICS_ENABLED && (
+            <>
+              <h3 className="font-display pt-2 text-lg text-ink">Cookies e medição de visitas</h3>
+              <p>
+                Se você aceitar os cookies, usamos ferramentas de medição (Google Analytics e Pixel da Meta) para contar visitas e
+                cliques nos botões de contato, de forma agregada, e melhorar os anúncios. Se recusar, nada disso é carregado. Para mudar
+                a escolha, limpe os dados do site no seu navegador.
+              </p>
+            </>
+          )}
           <h3 className="font-display pt-2 text-lg text-ink">Seus direitos</h3>
           <p>
             A qualquer momento você pode pedir para confirmar, corrigir ou excluir os seus dados, ou retirar o consentimento, falando com a

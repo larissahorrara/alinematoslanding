@@ -7,6 +7,7 @@ const LINKS = [
   { href: '#inicio', label: 'Início' },
   { href: '#planos', label: 'Planos' },
   { href: '#aline', label: 'Quem sou' },
+  { href: '#depoimentos', label: 'Depoimentos' },
   { href: '#cotacao', label: 'Contato' },
 ];
 
@@ -30,11 +31,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onHome }) => {
     <header className="sticky top-0 z-40 h-16 border-b border-line bg-white">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-5">
         <a href="#inicio" onClick={handleClick('#inicio')} className="flex min-h-11 items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-white">
+          <span className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-white min-[400px]:flex">
             <ShieldCheck className="h-5 w-5" aria-hidden="true" />
           </span>
           <span className="leading-none">
-            <span className="font-display block text-lg text-brand">Aline Matos</span>
+            <span className="font-display block whitespace-nowrap text-lg text-brand">Aline Matos</span>
             <span className="mt-1 hidden whitespace-nowrap text-[0.68rem] font-medium uppercase tracking-[0.12em] text-ink-soft sm:block">
               Planos de saúde
             </span>
@@ -62,11 +63,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onHome }) => {
             href={KIDS_PLAN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary !min-h-11 !px-5 !py-2 text-sm"
+            className="btn-primary !min-h-11 whitespace-nowrap !px-4 !py-2 text-sm sm:!px-5"
           >
-            <MessageCircle className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">Quero contratar</span>
-            <span className="sm:hidden">Contratar</span>
+            <MessageCircle className="hidden h-4 w-4 sm:block" aria-hidden="true" />
+            <span className="hidden sm:inline">Quero minha cotação grátis</span>
+            <span className="sm:hidden">Cotação grátis</span>
           </a>
           <button
             type="button"

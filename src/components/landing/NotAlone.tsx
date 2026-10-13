@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Ambulance, Baby, FlaskConical, Footprints, Hand, Smile, Stethoscope } from 'lucide-react';
-import { drawSvg, gsap, HEADER_HEIGHT, prefersReducedMotion, onIdle, ScrollTrigger } from '../../lib/motion';
+import { drawSvg, gsap, HEADER_HEIGHT, prefersReducedMotion, onIdle, requestRefresh } from '../../lib/motion';
 
 const PILLARS = [
   {
@@ -127,7 +127,7 @@ export const NotAlone: React.FC = () => {
           });
         });
       }, section);
-      ScrollTrigger.refresh();
+      requestRefresh();
     });
 
     function ScrollTriggerBatch(items: HTMLElement[]) {
