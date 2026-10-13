@@ -15,7 +15,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     name: 'Marcela',
-    text: 'Fui mt bem atendido(a) pela Aline. Super transparente c/ os valores. Me ajudou a economizar dms e achou a melhor opção p/ o meu bolso bem rápido. Nota 10! 👏',
+    text: 'Fui mt bem atendida pela Aline. Super transparente c/ os valores. Me ajudou a economizar dms e achou a melhor opção p/ o meu bolso bem rápido. Nota 10! 👏',
   },
   {
     name: 'Roberta',
