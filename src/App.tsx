@@ -17,6 +17,7 @@ import { SiteHeader } from './components/landing/SiteHeader';
 import { PrivacyDialog } from './components/landing/PrivacyDialog';
 import { Testimonials } from './components/landing/Testimonials';
 import { FAQ } from './components/landing/FAQ';
+import { BoletoQuote } from './components/landing/BoletoQuote';
 import { CookieConsent } from './components/landing/CookieConsent';
 
 // Páginas de guia carregadas sob demanda (deixam a página inicial mais leve)
@@ -80,6 +81,7 @@ export default function App() {
             <NotAlone />
             <AboutAline />
             <Testimonials />
+            <BoletoQuote />
           </>
         ) : (
           <Suspense fallback={<div className="min-h-[60svh]" />}>
