@@ -37,6 +37,10 @@
 }
 
 html {
+  /* Sem rolagem lateral nem "efeito elástico" que mostra fundo branco ao arrastar a página */
+  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior: none;
   scroll-padding-top: 72px;
   background-color: var(--color-cream);
   color: var(--color-ink);
@@ -56,8 +60,9 @@ html.lenis body {
 
 body {
   margin: 0;
-  min-width: 320px;
   overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior: none;
   background-color: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans);

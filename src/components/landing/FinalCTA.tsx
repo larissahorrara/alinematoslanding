@@ -241,7 +241,7 @@ export const FinalCTA: React.FC<{ id?: string }> = ({ id = 'cotacao' }) => {
                       onChange={update('phone')}
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-4 min-[400px]:grid-cols-2 min-[400px]:gap-3 lg:grid-cols-1 lg:gap-4 xl:grid-cols-2 xl:gap-3">
                     <div>
                       <label htmlFor={f('idade')} className="text-sm font-semibold text-ink">
                         Idade da criança
@@ -304,8 +304,8 @@ export const FinalCTA: React.FC<{ id?: string }> = ({ id = 'cotacao' }) => {
                       .
                     </span>
                   </label>
-                  <button type="submit" className="btn-primary mt-1 w-full">
-                    <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                  <button type="submit" className="btn-primary mt-1 w-full !px-4 text-center text-[0.98rem] leading-tight">
+                    <MessageCircle className="h-5 w-5 shrink-0" aria-hidden="true" />
                     Quero minha cotação grátis
                   </button>
                 </form>

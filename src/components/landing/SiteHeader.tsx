@@ -29,15 +29,15 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onHome }) => {
 
   return (
     <header className="sticky top-0 z-40 h-16 border-b border-line bg-white">
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-5">
+      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-2 px-4 sm:gap-4 sm:px-5">
         <a href="#inicio" onClick={handleClick('#inicio')} className="flex min-h-11 flex-col justify-center" aria-label="Aline Matos, planos de saúde — início">
-          <span className="font-logo whitespace-nowrap text-[1.9rem] leading-none text-brand sm:text-[2.1rem]">Aline Matos</span>
+          <span className="font-logo whitespace-nowrap text-[1.6rem] leading-none text-brand min-[380px]:text-[1.85rem] sm:text-[2.1rem]">Aline Matos</span>
           <span className="mt-0.5 hidden whitespace-nowrap pl-1 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ink-soft sm:block">
             Planos de saúde
           </span>
         </a>
 
-        <nav aria-label="Principal" className="hidden md:block">
+        <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {LINKS.map((l) => (
               <li key={l.href}>
@@ -58,16 +58,16 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onHome }) => {
             href={KIDS_PLAN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary !min-h-11 whitespace-nowrap !px-4 !py-2 text-sm sm:!px-5"
+            className="btn-primary !min-h-11 shrink-0 whitespace-nowrap !px-3.5 !py-2 text-sm min-[380px]:!px-4 sm:!px-5"
           >
-            <MessageCircle className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-            <span className="hidden sm:inline">Quero minha cotação grátis</span>
-            <span className="sm:hidden">Cotação grátis</span>
+            <MessageCircle className="hidden h-5 w-5 max-[359px]:block sm:block sm:h-4 sm:w-4" aria-hidden="true" />
+            <span className="hidden xl:inline">Quero minha cotação grátis</span>
+            <span className="max-[359px]:sr-only xl:hidden">Cotação grátis</span>
           </a>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-brand hover:bg-brand-soft md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-brand hover:bg-brand-soft lg:hidden"
             aria-label={open ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={open}
             aria-controls="menu-celular"
@@ -78,7 +78,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onHome }) => {
       </div>
 
       {open && (
-        <nav id="menu-celular" aria-label="Principal" className="border-b border-line bg-white px-5 pb-4 md:hidden">
+        <nav id="menu-celular" aria-label="Principal" className="border-b border-line bg-white px-5 pb-4 shadow-[var(--shadow-soft)] lg:hidden">
           <ul>
             {LINKS.map((l) => (
               <li key={l.href}>
